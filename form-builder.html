@@ -1,0 +1,238 @@
+
+ <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+ <link href="css/bootstrap-theme.min.css" rel="stylesheet" type="text/css" />
+    <script src="js/jquery-3.1.1.min.js"type="application/javascript"></script>
+
+
+ <script src="js/bootstrap.min.js" ></script>
+      
+    <div  id="formContainer">
+<div class="row">
+			<div class="col-md-11">
+            		<div class="panel-body">
+                                <div class="form-group">
+                               <div class="row">
+                               <div class="col-md-12">
+                                <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Untitled Form" value="Untitled Form">
+                               </div>
+                               </div>
+                                </div>
+                        </div>
+            </div>
+            <div class="col-md-1">
+                    <div class="floatingBar" title="Add New Field">
+                    		<div class="floatSection">
+                            <ul>
+                            	<li id="addNewQ"><label><i class="material-icons">library_books</i> <br />Add New Question</label></li>
+                                <li onclick="SaveForm()"><label><i class="material-icons">save</i> <br />Save Form</label></li>
+                            </ul>
+                            </div>
+                    </div>
+                   </div>
+</div>
+</div>
+ <script   >
+
+$(document).ready(function(){
+		FirstLoad();
+		
+		$('#addNewQ').click(function(){
+		 Clean();
+		
+			FirstLoad(); 
+		 $('.completeForm').each(function(){
+			 $(this).click(function(){
+			  Clean();
+			 $(this).css({
+			'padding': '15px',
+    'border-left': '3px solid  #4d90fe',
+	'box-shadow':'0 6px 10px #d4d4d4',
+		});
+			 })
+			}); 
+		});
+	});	
+	var clicks = 0;
+function Clean()
+{
+	$('.completeForm').css({
+			'padding': '15px',
+    'border-left': '3px solid  #fff',
+	'box-shadow':'none',
+		
+ 	});
+}
+function Run(IDS)
+{
+	  
+ 	
+	$('#mainDiv-'+IDS).css({
+			'padding': '15px',
+    'border-left': '3px solid  #4d90fe',
+	'box-shadow':'0 6px 10px #d4d4d4',
+		});
+ 	$('#mainDiv-'+IDS + ' #addSection-'+IDS).change(function(){
+		
+						var CheckType = $(this).val();
+				 
+					 
+					  
+					 $('#mainDiv-'+IDS+' #getWhat-'+IDS+' div').remove();
+					 $('#mainDiv-'+IDS+' #getWhat-'+IDS).append(createInput(IDS, CheckType));
+					
+				 
+		});
+}
+function uniqId() {
+  return Math.round(new Date().getTime() + (Math.random() * 100));
+}	
+
+function FirstLoad()
+{
+	var IDS = uniqId();
+	var Fields = '<div class="completeForm active" id="mainDiv-'+IDS+'" data-pass = "'+IDS+'"><div class="form-group" ><div class="row"><div class="col-md-7"><input type="text" class="form-control" id="question-'+IDS+'" placeholder="Untitled Question" value="Untitled Question"></div><div class="col-md-5"><select class="form-control" id="addSection-'+IDS+'"><option value="multiplechoice">One Choice</option><option value="shortanswer">Short Answer</option><option value="checkboxes">Multiple Choices</option><option value="dropdown">Dropdown</option></select></div></div></div><div id="getWhat-'+IDS+'"></div><a href="javascript:void(0)" id="removeSection" ><i class="material-icons">delete</i></a></div>';
+	 
+	$('#formContainer .panel-body').append(Fields);
+	createInput(IDS, 'multiplechoice');
+	Run(IDS);
+	$('.completeForm #removeSection').each(function(){
+	$(this).click(function(){
+		$(this).closest('.completeForm').remove();
+	});
+   
+})
+
+	 
+}
+function createInput(ParentID, CheckType)
+{
+	clicks++;
+	 
+	if(CheckType == 'multiplechoice')
+	{
+		 
+		var SubField = '<div class="row"  id="sub'+ParentID+'-'+clicks+'"><div class="col-md-10" ><div  class="input-group"><span class="input-group-addon"><input type="radio" id="multiplecheckbox" id="radio-'+ParentID+'"> </span><input type="text" class="form-control" id="radio-value-'+ParentID+'"> </div></div><div class="col-md-2" id="addSection"><a href="javascript:void(0);" id="remove" onclick="remove(\''+ParentID+'\',\''+clicks+'\')">Remove</a></div></div>	';
+		$('#mainDiv-'+ParentID+'  #addMore').remove();
+	$('<a href="javascript:void(0);" id="addMore" onclick="addMore(\''+ParentID+'\', \''+CheckType+'\')">Add More</a>').insertAfter('#mainDiv-'+ParentID+' #getWhat-'+ParentID);
+	
+	}
+	  if(CheckType == 'shortanswer')
+	{
+		 
+		var SubField = '<div class="row"  id="sub'+ParentID+'-'+clicks+'"><div class="col-md-10" ><p id="shortanswer-value-'+ParentID+'">Short Answer Field</p></div><div class="col-md-2" id="addSection"><a href="javascript:void(0);" id="remove" onclick="remove(\''+ParentID+'\',\''+clicks+'\')">Remove</a></div></div>	';
+		$('#mainDiv-'+ParentID+' #addMore').remove();
+	}
+	  if(CheckType == 'checkboxes')
+	{
+		 
+		var SubField = '<div class="row"  id="sub'+ParentID+'-'+clicks+'"><div class="col-md-10" ><div  class="input-group"><span class="input-group-addon"><input type="checkbox" id="multiplecheckbox" id="checkbox-'+ParentID+'"> </span><input type="text" class="form-control" id="checkbox-value-'+ParentID+'"> </div></div><div class="col-md-2" id="addSection"><a href="javascript:void(0);" id="remove" onclick="remove(\''+ParentID+'\',\''+clicks+'\')">Remove</a></div></div>	';
+		$('#mainDiv-'+ParentID+'  #addMore').remove();
+	$('<a href="javascript:void(0);" id="addMore" onclick="addMore(\''+ParentID+'\', \''+CheckType+'\')">Add More</a>').insertAfter('#mainDiv-'+ParentID+' #getWhat-'+ParentID);
+	}
+	  if(CheckType == 'dropdown')
+	{
+		 
+		var SubField = '<div class="row"  id="sub'+ParentID+'-'+clicks+'"><div class="col-md-10" ><div  class="input-group"><input type="text" class="form-control" id="dropdown-value-'+ParentID+'" placeholder="Option '+clicks+'"> </div></div><div class="col-md-2" id="addSection"><a href="javascript:void(0);" id="remove" onclick="remove(\''+ParentID+'\',\''+clicks+'\')">Remove</a></div></div>	';
+		$('#mainDiv-'+ParentID+'  #addMore').remove();
+	$('<a href="javascript:void(0);" id="addMore" onclick="addMore(\''+ParentID+'\', \''+CheckType+'\')">Add More</a>').insertAfter('#mainDiv-'+ParentID+' #getWhat-'+ParentID);
+	}
+	 
+	  	
+	$('#mainDiv-'+ParentID+' div#getWhat-'+ParentID).append(SubField);
+ }
+function addMore(IDS, CheckType)
+{
+	createInput(IDS,CheckType);
+}
+
+function remove(IDS,clicks)
+{
+	var GetLength= $('#mainDiv-'+IDS+' #getWhat-'+ParentID+' #remove').length;
+$('#mainDiv-'+IDS+' #sub'+IDS+'-'+clicks).remove(); 
+	
+}
+
+function SaveForm2()
+		{
+			 
+			$('.completeForm').each(function(){ 
+			var getpass = $(this).data('pass'); 
+		 
+		var Fdf = $(this).children('#getWhat').find($('#radio')).length;
+		 
+ 				var data = $(this).map(function() {
+    return {
+        inputtype: $('#addSection-'+getpass).val(),
+        question: $('#question-'+getpass).val(),
+		values: 'p'
+    };
+}).get();
+
+console.log(data);
+							
+			});
+		}
+		
+function SaveFormdd(){
+	 
+	$(".completeForm").each(function(){
+		var input= '';
+		var getpass = $(this).data('pass'); 
+     $(this).find('#getWhat-'+getpass).find(':input:not(#multiplecheckbox)').each(function(){
+   input += $(this).val()+", "; // This is the jquery object of the input, do what you will
+});
+
+   data = $(this).map(function() {
+    return {
+        inputtype: $('#addSection-'+getpass).val(),
+        question: $('#question-'+getpass).val(),
+		values: input
+    };
+}).get();
+
+			
+
+
+});
+ 
+}
+
+function SaveForm()
+{
+	 jsonObj = [];
+	 var number = 1 + Math.floor(Math.random() * 9999999999);
+      var TotalData = '';
+	 var FormName = $('#exampleInputEmail1').val();
+	$(".completeForm").each(function(){
+
+     var input= '';
+	 
+		var getpass = $(this).data('pass'); 
+     $(this).find('#getWhat-'+getpass).find(':input:not(#multiplecheckbox)').each(function(){
+   input += $(this).val()+", "; // This is the jquery object of the input, do what you will
+});
+
+
+        item = {}
+        item ["quest"] = $('#question-'+getpass).val();
+        item ["type"] = $('#addSection-'+getpass).val()	;
+		 item ["values"] = input;
+
+         jsonObj.push(item);
+    });
+
+for(var T=0; T<jsonObj.length; T++)
+{
+		$.ajax({
+			type:'post',
+			data:'&number='+number+'&FormName='+FormName+'&quest='+jsonObj[T].quest+'&type='+jsonObj[T].type+'&values='+jsonObj[T].values+'&task=saveform',
+			url:'',
+			success:function(response){
+				console.log(response);
+			}
+		
+		})
+}
+}
+</script>
+      
