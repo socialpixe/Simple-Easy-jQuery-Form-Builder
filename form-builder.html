@@ -151,51 +151,7 @@ function remove(IDS,clicks)
 $('#mainDiv-'+IDS+' #sub'+IDS+'-'+clicks).remove(); 
 	
 }
-
-function SaveForm2()
-		{
-			 
-			$('.completeForm').each(function(){ 
-			var getpass = $(this).data('pass'); 
-		 
-		var Fdf = $(this).children('#getWhat').find($('#radio')).length;
-		 
- 				var data = $(this).map(function() {
-    return {
-        inputtype: $('#addSection-'+getpass).val(),
-        question: $('#question-'+getpass).val(),
-		values: 'p'
-    };
-}).get();
-
-console.log(data);
-							
-			});
-		}
-		
-function SaveFormdd(){
-	 
-	$(".completeForm").each(function(){
-		var input= '';
-		var getpass = $(this).data('pass'); 
-     $(this).find('#getWhat-'+getpass).find(':input:not(#multiplecheckbox)').each(function(){
-   input += $(this).val()+", "; // This is the jquery object of the input, do what you will
-});
-
-   data = $(this).map(function() {
-    return {
-        inputtype: $('#addSection-'+getpass).val(),
-        question: $('#question-'+getpass).val(),
-		values: input
-    };
-}).get();
-
-			
-
-
-});
  
-}
 
 function SaveForm()
 {
